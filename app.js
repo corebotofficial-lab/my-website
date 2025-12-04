@@ -60,10 +60,27 @@ app.get('/dashboard', (req, res) => {
     res.render('dashboard', { user: req.session.user });
 });
 
+// New pages/routes
+
+// About page (accessible to everyone)
+app.get('/about', (req, res) => {
+    res.render('about', { user: req.session.user });
+});
+
+// Profile page (only for logged-in users)
+app.get('/profile', (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    res.render('profile', { user: req.session.user });
+});
+
+
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
 
+
+
 // Start server
 app.listen(process.env.PORT || 3000, () => console.log('Server running'));
+
